@@ -112,6 +112,7 @@ export default {
     },
     // 发送文字
     sendMessage () {
+      if (!this.input_text && !this.input_text.trim()) return
       this.socket.emit('send-message', {name: this.nick_name, message: this.input_text, url: this.mysel_url})
       this.input_text = ''
     },
@@ -272,6 +273,7 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 5px;
+  flex-shrink: 0;
 }
 .avatar img{
   width: 100%;
@@ -301,6 +303,7 @@ export default {
   border-radius: 6px;
   position: relative;
   margin-top: 8px;
+  text-align: left;
 }
 .text:before{
   position: absolute;
@@ -314,6 +317,7 @@ export default {
   border-bottom: 5px solid transparent;
 }
 .text-right{
+  text-align: left;
   background: #80D640;
   color: white;
   font-size: 14px;
