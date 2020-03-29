@@ -10,8 +10,8 @@
         </div>
       </el-col>
       <el-col :span="17" class="chat-content">
+        <div class="num">在线{{local_users.length}}人</div>
         <div class="content-area" ref="area">
-          <div class="num">在线{{local_users.length}}人</div>
           <div :class="['info', {myself: item.status}]" v-for="(item, index) in message_list" :key="index">
             <template v-if="!item.status">
               <div class="avatar">
@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="input-area">
-          <el-input class="input" v-model="input_text" placeholder="请输入内容"></el-input>
+          <el-input class="input" v-model="input_text" @keyup.enter.native="sendMessage" placeholder="请输入内容"></el-input>
           <el-button class="send-btn" type="primary" @click="sendMessage">发送</el-button>
         </div>
       </el-col>
@@ -93,7 +93,7 @@ export default {
       if (!this.nick_name && !this.nick_name.trim()) {
         this.$message({
           showClose: true,
-          message: '填写昵称',
+          message: '请填写昵称',
           type: 'error'
         })
       } else {
@@ -179,7 +179,7 @@ export default {
   mounted () {
   },
   created () {
-    this.socket = socketio('ws://localhost:5000/')
+    this.socket = socketio('ws://www.yeshen1.cn:5000/')
   }
 }
 </script>
@@ -224,6 +224,7 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 }
 .content-area{
   width: 100%;
@@ -234,12 +235,11 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  position: relative;
 }
-.content-area .num{
+.chat-content .num{
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 25px;
+  top: -25px;
   color: #80D640;
   font-size: 13px;
   font-weight: bold;
